@@ -1,6 +1,8 @@
 import type { ExtensionContext } from 'vscode'
 import type { ThemePaths } from '~/types'
+import type { VariantName } from '~/utils/variants'
 import { Uri } from 'vscode'
+import { variantNames } from '~/utils/variants'
 
 /**
  * Get extension runtime root (`dist`)
@@ -38,22 +40,11 @@ export function getUnflavoredPath(context: ExtensionContext) {
  */
 export function getThemePaths(context: ExtensionContext): ThemePaths {
   const root = getRootPath(context)
-  return {
-    frappe: {
-      icons: Uri.joinPath(root, 'frappe', 'icons'),
-      theme: Uri.joinPath(root, 'frappe', 'theme.json'),
-    },
-    latte: {
-      icons: Uri.joinPath(root, 'latte', 'icons'),
-      theme: Uri.joinPath(root, 'latte', 'theme.json'),
-    },
-    macchiato: {
-      icons: Uri.joinPath(root, 'macchiato', 'icons'),
-      theme: Uri.joinPath(root, 'macchiato', 'theme.json'),
-    },
-    mocha: {
-      icons: Uri.joinPath(root, 'mocha', 'icons'),
-      theme: Uri.joinPath(root, 'mocha', 'theme.json'),
-    },
-  }
+  return variantNames.reduce((paths, variant) => {
+    paths[variant] = {
+      icons: Uri.joinPath(root, variant, 'icons'),
+      theme: Uri.joinPath(root, variant, 'theme.json'),
+    }
+    return paths
+  }, {} as Record<VariantName, { icons: Uri, theme: Uri }>)
 }

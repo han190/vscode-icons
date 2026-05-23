@@ -1,21 +1,19 @@
-import type { AccentName, FlavorName, MonochromaticName } from '@catppuccin/palette'
-import { flavorEntries, flavors } from '@catppuccin/palette'
+import type { VariantColorName, VariantName } from '~/utils/variants'
+import { cssVariablePalette, variantEntries } from '~/utils/variants'
 
-export type ColorName = AccentName | Extract<MonochromaticName, 'text' | 'overlay1'>
+export type ColorName = Exclude<VariantColorName, 'mantle'>
 
 /**
  * Simplified ColorName/Hexcode palettes
  */
 export const palettes = {
-  ...flavorEntries.reduce((acc, [flavorName, flavor]) => ({
+  ...variantEntries.reduce((acc, [variantName, palette]) => ({
     ...acc,
-    [flavorName]: flavor.colorEntries
-      .filter(([color, { accent }]) => accent || ['text', 'overlay1'].includes(color))
-      .map(([color, { hex }]) => [color, hex]),
-  }), {} as Record<FlavorName | 'css-variables', Array<[ColorName, string]>>),
-  'css-variables': flavors.latte.colorEntries
-    .filter(([color, { accent }]) => accent || ['text', 'overlay1'].includes(color))
-    .map(([color]) => ([color, `var(--vscode-ctp-${color})`])) as Array<[ColorName, string]>,
+    [variantName]: Object.entries(palette)
+      .filter(([color]) => color !== 'mantle')
+      .map(([color, hex]) => [color as ColorName, hex]),
+  }), {} as Record<VariantName | 'css-variables', Array<[ColorName, string]>>),
+  'css-variables': cssVariablePalette as Array<[ColorName, string]>,
 }
 
 export const folders = [
@@ -24,4 +22,6 @@ export const folders = [
   'latte',
   'macchiato',
   'mocha',
+  'dark-2026',
+  'light-2026',
 ] satisfies Array<keyof typeof palettes>

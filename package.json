@@ -113,6 +113,16 @@
         "id": "catppuccin-macchiato",
         "label": "Catppuccin Macchiato",
         "path": "./dist/macchiato/theme.json"
+      },
+      {
+        "id": "catppuccin-dark-2026",
+        "label": "Catppuccin Dark 2026",
+        "path": "./dist/dark-2026/theme.json"
+      },
+      {
+        "id": "catppuccin-light-2026",
+        "label": "Catppuccin Light 2026",
+        "path": "./dist/light-2026/theme.json"
       }
     ]
   },

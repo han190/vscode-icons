@@ -33,6 +33,14 @@
   <summary>🌿 Mocha</summary>
   <img src="assets/mocha.webp"/>
 </details>
+<details>
+  <summary>🌌 Dark 2026</summary>
+  <img src="assets/dark-2026.webp"/>
+</details>
+<details>
+  <summary>☀️ Light 2026</summary>
+  <img src="assets/light-2026.webp"/>
+</details>
 
 ## Features
 

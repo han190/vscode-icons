@@ -7,15 +7,15 @@ import { cp, readdir, rm, writeFile } from 'node:fs/promises'
 import { basename, join } from 'node:path'
 import { env, exit } from 'node:process'
 import { setOutput } from '@actions/core'
-import { flavorEntries } from '@catppuccin/palette'
 import { createVSIX } from '@vscode/vsce'
 import { consola } from 'consola'
 import packageJson from 'package.json' assert { type: 'json' }
 import { build } from 'tsup'
 import { compileTheme } from '~/utils/themes'
+import { variantNames } from '~/utils/variants'
 
 const DIST = 'dist'
-const flavors = flavorEntries.map(([f]) => f)
+const flavors = variantNames
 
 try {
   consola.info('Deleting previous build...')

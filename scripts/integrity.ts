@@ -2,7 +2,7 @@
  * Ensure all default associations refer to existing icons.
  */
 
-import { readdir } from 'node:fs/promises'
+import { readdir, stat } from 'node:fs/promises'
 import { basename, join, resolve } from 'node:path'
 import { exit } from 'node:process'
 import { consola } from 'consola'
@@ -12,7 +12,12 @@ import { folderIcons } from '~/defaults/folderIcons'
 let exitCode = 0
 
 const ICONS = 'icons'
-const flavors = await readdir(resolve(ICONS))
+const flavors = (await Promise.all(
+  (await readdir(resolve(ICONS))).map(async (entry) => {
+    const path = resolve(join(ICONS, entry))
+    return (await stat(path)).isDirectory() ? entry : null
+  }),
+)).filter((entry): entry is string => entry !== null)
 
 consola.info('Running integrity check...')
 

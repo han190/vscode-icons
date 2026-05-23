@@ -1,8 +1,7 @@
-import type { ColorName, FlavorName } from '@catppuccin/palette'
 import type { IconsConfig } from '~/types'
-import { flavors } from '@catppuccin/palette'
 import defu from 'defu'
 import { defaultConfig } from '~/defaults'
+import { variantPalettes, type VariantColorName, type VariantName } from '~/utils/variants'
 
 /**
  * Create icon with Text color from `flavor` only
@@ -10,10 +9,10 @@ import { defaultConfig } from '~/defaults'
  * @param flavor flavor to pick Text color from
  * @returns flavored monochrome icon svg
  */
-export function monochromeIcon(svg: string, flavor: FlavorName) {
+export function monochromeIcon(svg: string, flavor: VariantName) {
   return svg.replaceAll(
     /var\(--vscode-ctp-\w+\)/g,
-    flavors[flavor].colors.text.hex,
+    variantPalettes[flavor].text,
   )
 }
 
@@ -23,10 +22,10 @@ export function monochromeIcon(svg: string, flavor: FlavorName) {
  * @param flavor flavor to pick palette from
  * @returns flavored default icon svg
  */
-export function defaultIcon(svg: string, flavor: FlavorName) {
+export function defaultIcon(svg: string, flavor: VariantName) {
   return svg.replaceAll(
     /var\(--vscode-ctp-\w+\)/g,
-    v => flavors[flavor].colors[v.slice(17, -1) as ColorName].hex,
+    v => variantPalettes[flavor][v.slice(17, -1) as VariantColorName],
   )
 }
 
@@ -37,7 +36,7 @@ export function defaultIcon(svg: string, flavor: FlavorName) {
  * @param config config to pick options from
  * @returns flavored default icon svg
  */
-export function compileIcon(svg: string, flavor: FlavorName, config: Partial<IconsConfig>) {
+export function compileIcon(svg: string, flavor: VariantName, config: Partial<IconsConfig>) {
   const { monochrome } = defu(config, {
     monochrome: defaultConfig.monochrome,
   })

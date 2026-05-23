@@ -1,6 +1,8 @@
 dist/
 node_modules/
 .eslintcache
+.pnpm-store/
+.pnpm-*-marker
 .pnpm-debug.log*
 *.vsix
 .DS_Store

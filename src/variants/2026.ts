@@ -1,0 +1,41 @@
+import type { VariantPalette } from '~/utils/variants'
+
+export const dark2026Palette = {
+  rosewater: '#FFA198',
+  flamingo: '#FF7B72',
+  pink: '#D2A8FF',
+  mauve: '#B267E6',
+  red: '#F48771',
+  maroon: '#F44747',
+  peach: '#FFA657',
+  yellow: '#E5BA7D',
+  green: '#73C991',
+  teal: '#3994BC',
+  sky: '#48A0C7',
+  sapphire: '#79C0FF',
+  blue: '#6796E6',
+  lavender: '#A5D6FF',
+  text: '#BFBFBF',
+  overlay1: '#8C8C8C',
+  mantle: '#191A1B',
+} satisfies VariantPalette
+
+export const light2026Palette = {
+  rosewater: '#FFB8A1',
+  flamingo: '#FF938A',
+  pink: '#A66BFF',
+  mauve: '#8250DF',
+  red: '#CF222E',
+  maroon: '#82071E',
+  peach: '#953800',
+  yellow: '#B69500',
+  green: '#587C0C',
+  teal: '#116329',
+  sky: '#2F81F7',
+  sapphire: '#0550AE',
+  blue: '#0069CC',
+  lavender: '#6E7781',
+  text: '#202020',
+  overlay1: '#606060',
+  mantle: '#FAFAFD',
+} satisfies VariantPalette

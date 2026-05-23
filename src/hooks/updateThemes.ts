@@ -1,5 +1,4 @@
 import type { ExtensionContext } from 'vscode'
-import { flavorEntries } from '@catppuccin/palette'
 import { Uri, window, workspace } from 'vscode'
 import { getConfig } from '~/hooks/configuration'
 import { getIconDefinitions } from '~/hooks/iconDefinitions'
@@ -7,6 +6,7 @@ import { readFile, writeFile, writeJsonFile } from '~/hooks/interactions'
 import { getThemePaths, getUnflavoredPath } from '~/hooks/paths'
 import { compileIcon, hashedSvgPath, iconHash } from '~/utils/icons'
 import { compileTheme } from '~/utils/themes'
+import { variantNames } from '~/utils/variants'
 
 /**
  * Update themes and icons according to configuration
@@ -18,13 +18,12 @@ export async function updateThemes(context: ExtensionContext, icons = false) {
   const paths = getThemePaths(context)
   const config = getConfig()
   const hash = iconHash(config)
-  const flavors = flavorEntries.map(([f]) => f)
 
   if (icons) {
     const unflavored = getUnflavoredPath(context)
     const unflavoredIcons = await workspace.fs.readDirectory(unflavored)
 
-    await Promise.all(flavors.map(async (flavor) => {
+    await Promise.all(variantNames.map(async (flavor) => {
       // delete flavored icons
       await workspace.fs.delete(paths[flavor].icons, { recursive: true })
       // recreate flavored icon folder
@@ -48,7 +47,7 @@ export async function updateThemes(context: ExtensionContext, icons = false) {
 
   // create and write `theme.json` files
   const theme = compileTheme(config, iconDefinitions)
-  await Promise.all(flavors.map(async (flavor) => {
+  await Promise.all(variantNames.map(async (flavor) => {
     await writeJsonFile(paths[flavor].theme, theme)
   })).catch((e: Error) => {
     window.showErrorMessage(`Failed to save re-compiled theme: \n${e.message}`)

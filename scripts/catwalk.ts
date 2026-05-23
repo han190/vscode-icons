@@ -2,17 +2,16 @@
  * Generate main preview using Catwalk.
  */
 
-import type { FlavorName } from '@catppuccin/palette'
 import { exec } from 'node:child_process'
 import { mkdtemp, readdir, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join, resolve, sep } from 'node:path'
 import { exit } from 'node:process'
 import { promisify } from 'node:util'
-import { flavorEntries, flavors } from '@catppuccin/palette'
 import { consola } from 'consola'
 import { lookpath } from 'lookpath'
 import { launch } from 'puppeteer'
+import { variantEntries, variantPalettes, type VariantName } from '~/utils/variants'
 
 if (!await lookpath('catwalk')) {
   consola.error('Catwalk not installed.')
@@ -26,21 +25,21 @@ const fileIcons = allIcons
   .filter(i => !i.startsWith('folder_') && !i.startsWith('_'))
   .toSorted(() => 0.5 - Math.random())
 
-function generateIcons(flavor: FlavorName) {
+function generateIcons(flavor: VariantName) {
   return Array.from({ length: 6 })
     .fill(fileIcons.map(i => `${resolve(join('icons', flavor, i))}`))
     .flat()
 }
 
-function generateHtml(flavor: FlavorName) {
+function generateHtml(flavor: VariantName) {
   const icons = generateIcons(flavor)
   return `
   <html>
     <head>
       <style>
         body {
-          color: ${flavors[flavor].colors.text.hex};
-          background-color: ${flavors[flavor].colors.mantle.hex};
+          color: ${variantPalettes[flavor].text};
+          background-color: ${variantPalettes[flavor].mantle};
         }
         .icon {
           width: 32px;
@@ -71,7 +70,7 @@ try {
 
   const tmp = await mkdtemp(join(tmpdir(), sep))
 
-  const images = await Promise.all(flavorEntries.map(async ([flavor]) => {
+  const images = await Promise.all(variantEntries.map(async ([flavor]) => {
     const htmlPath = join(tmp, `${flavor}.html`)
     const screenshotPath = join(tmp, `${flavor}.png`) as `${string}.png`
     await writeFile(htmlPath, generateHtml(flavor))
