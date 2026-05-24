@@ -24,4 +24,5 @@ export const folders = [
   'mocha',
   'dark-2026',
   'light-2026',
+  'nord',
 ] satisfies Array<keyof typeof palettes>

@@ -1,6 +1,7 @@
 import type { AccentName, FlavorName, MonochromaticName } from '@catppuccin/palette'
 import { flavorEntries } from '@catppuccin/palette'
 import { dark2026Palette, light2026Palette } from '~/variants/2026'
+import { nordPalette } from '~/variants/nord'
 
 export type VariantColorName = AccentName | Extract<MonochromaticName, 'mantle' | 'overlay1' | 'text'>
 
@@ -38,6 +39,7 @@ export const variantPalettes = {
   ...catppuccinVariants,
   'dark-2026': dark2026Palette,
   'light-2026': light2026Palette,
+  nord: nordPalette,
 } as const satisfies Record<string, VariantPalette>
 
 export type VariantName = keyof typeof variantPalettes

@@ -123,6 +123,11 @@
         "id": "catppuccin-light-2026",
         "label": "Catppuccin Light 2026",
         "path": "./dist/light-2026/theme.json"
+      },
+      {
+        "id": "catppuccin-nord",
+        "label": "Catppuccin Nord",
+        "path": "./dist/nord/theme.json"
       }
     ]
   },

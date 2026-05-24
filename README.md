@@ -41,6 +41,10 @@
   <summary>☀️ Light 2026</summary>
   <img src="assets/light-2026.webp"/>
 </details>
+<details>
+  <summary>❄️ Nord</summary>
+  <img src="assets/nord.webp"/>
+</details>
 
 ## Features
 
